@@ -8,9 +8,10 @@ Benden bir müşteri gerçekten böyle bir projeyi 3 gün içerisinde istemiş o
 
 Katmanlı mimari kullanmayı seçtim, dependency injeciton önlemek için malesef projemde önüne geçemediğim noktalar var. Her fonksiyonu generic oluşturmak yerine ortaya çalışan birşey koymak için çalıştım.
 
-Veritabanında code first kullandım. Normalde dbfirst yazmayı tercih ederim, schaffold kullanmadan. net core orm ile db ile haberleşmeyi yeğliyorum. Veritabanı üzerindeki etkinliğimi arttıyor. Ancak hızlı ve portatif olması için bu şekilde yapmadım. Model builder üzerinde bir db var. (01)Data access katmanı içinde onu kurarak devam edebilirsiniz.
+Veritabanında code first kullandım. Normalde dbfirst yazmak istemiştim,  Veritabanı üzerindeki etkinliğimi arttıyor. Schaffold kullanmadan. net core orm ile db ile haberleşmeyi yeğliyorum. 
+
+Hem veritabanındaki tablolara,prosedürlere(prosedürün bu noktada hem güvenlik hem de hız açısından bence önemi büyük. net core'un prosedurden hızlı çalıştığını savunanlar var aksini savunanlarda var, performans olarak bir sonucum yok ama prosedür ile daha rahat çalışıyorum) hemde front end üzerinde js framework ile bide backend için .net core kod yazacak zamanım yoktu.
+
+Hızlı bitirebilmek ve portatif olması için herşeyi visual studio üzerinde yaptımS. Model builder üzerinde bir db var. (01)Data access katmanı içinde onu kurarak devam edebilirsiniz.
 
 Buna ek olarak html kodları indirdiğimiz için inputlara backende geçerken güvenliği açığı oluşturuyor. Sourunu çözmek adına verilerin kontrolunu kapattım. Güvenlik 0 ama, ayrıca token ile giriş yada admin hesabını şifrelemeyerek veritabanında da tutmadım.
-
-Eğer sormak istediğiniz bir şey olursa caglarcansarikaya@gmail.com üzerinden ulaşabilirsiniz.
-
