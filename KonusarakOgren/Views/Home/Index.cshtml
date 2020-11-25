@@ -1,0 +1,82 @@
+﻿@model List<KonusarakOgren.Models.RssArticle>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.2.1.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12" style="margin-top:15px">
+                <form method="post" action="/Home/Index/" enctype="multipart/form-data">
+                    <div class="form-group">
+                        
+                        <span>Sınav Hazırla |</span><a href="@Url.Action("ExamList", "Home")"> Sınavlarım</a>
+                        <select class="form-control" id="Select">
+                            @foreach (var item in Model)
+                            {
+                                <option value="@item.Link">@item.Title</option>
+                            }
+                        </select>
+                        <div class="form-group well" style="max-height: 450px; overflow: scroll">
+                            <span id="content">
+
+                            </span>
+                            <input type="hidden" name="ExamHead" id="Title" />
+                            <input type="hidden" class="hidden" name="ExamContent" id="examDesc" />
+                        </div>
+                    </div>
+                    @{
+                        string[] answerOption = { "A)", "B)", "C)", "D)" };
+                        for (int i = 1; i < 5; i++)
+                        {
+                            <div class="form-group">
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <input required type="text" class="form-control" placeholder="@i. Soruyu Giriniz..." name="Question" />
+                                    </div>
+                                    @for (int k = 1; k < 5; k++)
+                                    {
+                                        <div class="col-md-6">
+                                            <input required type="text" class="form-control questionInput" placeholder="@answerOption[k-1]" name="Answer" id="@String.Format("{0}{1}Input",i,k)" />
+                                        </div>
+
+                                    }
+                                    <div class="col-md-6 col-md-offset-3">
+                                        <select class="form-control questionOptions" name="True" id="@String.Format("{0}select",i) ">
+                                            <option id="@String.Format("{0}a",i)" value=""></option>
+                                            <option id="@String.Format("{0}b",i)" value=""></option>
+                                            <option id="@String.Format("{0}c",i)" value=""></option>
+                                            <option id="@String.Format("{0}d",i)" value=""></option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                    <center>
+                        <input type="submit" class="well-lg" value="SINAV OLUŞTUR" />
+                    </center>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/Scripts/jquery-3.2.1.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+
+    <script src="~/Scripts/myJS.js"></script>
+
+
+</body>
+
+</html>

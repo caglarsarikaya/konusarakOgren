@@ -1,0 +1,83 @@
+﻿@model List<Entities.Exam>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ExamList</title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+</head>
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="form-group">
+                    <table class="table">
+                        <thead>
+                            <tr role="row">
+                                <th>#</th>
+                                <th>Başlık</th>
+                                <th>Tarih</th>
+                                <th> <a href="@Url.Action("Index", "Home")">Yeni Sınav</a> </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@item.Id</td>
+                                        <td>
+                                            <a href="@Url.Action("ExamTest", "Home",new {Id = item.Id})" name="@item.Id">@item.Head</a>
+                                        </td>
+                                        <td>
+                                            @item.Date
+                                        </td>
+                                        <td>
+                                            <a href="#" class="Sil" name="@item.Id">Sil</a>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="~/Scripts/jquery-3.2.1.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $(".Sil").click(function () {
+                if (confirm("Silmek istediğinize emin misiniz?")) {
+                    var Id = $(this).attr('name');
+                    $.ajax({
+                        url: '/Home/ExamDelete/' + Id,
+                        type: 'POST',
+                        dataType: 'json',
+                        success: function (data) {
+                            setTimeout(function () {
+                                location.reload();  //Refresh page
+                            }, 500);
+                        }
+                    });
+                }
+            });
+
+           
+        });
+
+    </script>
+
+</body>
+</html>

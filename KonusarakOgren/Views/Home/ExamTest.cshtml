@@ -1,0 +1,114 @@
+﻿@model Entities.Exam
+
+@{
+    Layout = null;
+    int questionRow = 1;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ExamTest</title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+
+    <style>
+        .radioBtn {
+            background-color: #d6d4d4;
+            border-bottom: 1px #d6d4d4 solid;
+        }
+
+        .radioBtnGreen {
+            background-color: #33af01;
+            border-bottom: 1px #33af01 solid;
+        }
+
+        .radioBtnRed {
+            background-color: #ff0000;
+            border-bottom: 1px #ff0000 solid;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1 ">
+                <div class="form-group">
+                    <center>
+                        <h1>@Model.Head</h1>
+                    </center>
+                    <center>
+                        <p>@Model.Description</p>
+                    </center>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        @{
+                            foreach (var item in Model.Questions)
+                            {
+                                <div class="col-md-6" style="margin-top:20px">
+                                    <div class="form-group">
+                                        @questionRow) @item.Content
+                                        @{
+                                            foreach (var item2 in item.Answers)
+                                            {
+                                                <div class="form-group radioBtn">
+                                                    <input type="radio" value="@item2.Id" name="@item.Id">
+                                                    <label>@item2.Text</label>
+                                                </div>
+                                            }
+                                        }
+                                        @{ questionRow++;}
+                                    </div>
+                                </div>
+                                            }
+                        }
+                        <center>
+                            <input id="Finish" type="button" style="margin-top:20px" class="well-lg" value="SINAVI TAMAMLA" />
+                        </center>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/Scripts/jquery-3.2.1.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#Finish").click(function () {
+                var cevaplar = [];
+                var sayac = 0;
+                $("input:checked").each(function () {
+                    cevaplar[sayac] = $(this).val();
+                    sayac++;
+                });
+
+                $.ajax({
+                    url: '/Home/ExamEnd/',
+                    type: 'POST',
+                    data: {
+                        cevaplar: cevaplar
+                    },
+                    dataType: 'json',
+                    success: function (data) {
+                        var counter = 0;
+                        $("input:checked").each(function () {
+                            $(this).parent().removeClass("radioBtn")
+                            if (data[counter] == true) {
+                                $(this).parent().addClass("radioBtnGreen")
+                            }
+                            else {
+                                $(this).parent().addClass("radioBtnRed")
+                            }
+                            counter++;
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
